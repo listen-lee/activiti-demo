@@ -1,0 +1,3 @@
+spring:
+  activiti:
+    process-definition-location-prefix: classpath:/processes/

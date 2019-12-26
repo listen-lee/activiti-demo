@@ -15,6 +15,8 @@ import org.activiti.api.process.model.ProcessInstance;
 import org.activiti.api.process.model.builders.ProcessPayloadBuilder;
 import org.activiti.api.process.runtime.ProcessRuntime;
 import org.activiti.api.process.runtime.connector.Connector;
+import org.activiti.api.process.runtime.events.ProcessCompletedEvent;
+import org.activiti.api.process.runtime.events.listener.ProcessRuntimeEventListener;
 import org.activiti.api.runtime.shared.query.Page;
 import org.activiti.api.runtime.shared.query.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +87,35 @@ public class ActivitiCommand implements CommandLineRunner {
         };
     }
 
+    @Bean
+    public Connector tagTextConnector() {
+        return integrationContext -> {
+            String contentToTag = (String) integrationContext.getInBoundVariables().get("content");
+            contentToTag += " :) ";
+            integrationContext.addOutBoundVariable("content", contentToTag);
+            log.info("Final Content: {}", contentToTag);
+            return integrationContext;
+        };
+    }
+
+    @Bean
+    public ProcessRuntimeEventListener<ProcessCompletedEvent> processCompletedListener() {
+        return processCompleted ->
+                log.info(">>> Process Completed: '{}' We can send a notification to the initiator: {}",
+                        processCompleted.getEntity().getName(), processCompleted.getEntity().getInitiator()
+                );
+    }
+
+    @Bean
+    public Connector discardTextConnector() {
+        return integrationContext -> {
+            String contentToDiscard = (String) integrationContext.getInBoundVariables().get("content");
+            contentToDiscard += " :( ";
+            integrationContext.addOutBoundVariable("content", contentToDiscard);
+            log.info("Final Content: {}", contentToDiscard);
+            return integrationContext;
+        };
+    }
 
     private String pickRandomString() {
         String[] texts = {"hello from london", "Hi there from activiti!", "all good news over here.", "I've tweeted about activiti today.",
