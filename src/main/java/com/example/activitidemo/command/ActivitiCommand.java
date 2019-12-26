@@ -14,16 +14,19 @@ import org.activiti.api.process.model.ProcessDefinition;
 import org.activiti.api.process.model.ProcessInstance;
 import org.activiti.api.process.model.builders.ProcessPayloadBuilder;
 import org.activiti.api.process.runtime.ProcessRuntime;
+import org.activiti.api.process.runtime.connector.Connector;
 import org.activiti.api.runtime.shared.query.Page;
 import org.activiti.api.runtime.shared.query.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import java.util.Random;
 
 @Slf4j
@@ -64,6 +67,24 @@ public class ActivitiCommand implements CommandLineRunner {
         log.info(">>> Created Process Instance: {}", processInstance);
 
     }
+
+    @Bean
+    public Connector processTextConnector() {
+        return integrationContext -> {
+            Map<String, Object> inBoundVariables = integrationContext.getInBoundVariables();
+            String contentTOProcess = (String) inBoundVariables.get("content");
+            // Logic Here to decide if content is approved or not
+            if (contentTOProcess.contains("activiti")) {
+                log.info("> Approving content: {}", contentTOProcess);
+                integrationContext.addOutBoundVariable("approved", true);
+            } else {
+                log.info("> Discarding content: {}", contentTOProcess);
+                integrationContext.addOutBoundVariable("approved", false);
+            }
+            return integrationContext;
+        };
+    }
+
 
     private String pickRandomString() {
         String[] texts = {"hello from london", "Hi there from activiti!", "all good news over here.", "I've tweeted about activiti today.",
