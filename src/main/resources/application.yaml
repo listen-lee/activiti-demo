@@ -1,3 +1,4 @@
 spring:
   activiti:
     process-definition-location-prefix: classpath:/processes/
+    check-process-definitions: false

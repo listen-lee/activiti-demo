@@ -32,7 +32,7 @@ import java.util.Map;
 import java.util.Random;
 
 @Slf4j
-@Component
+//@Component
 public class ActivitiCommand implements CommandLineRunner {
 
     @Autowired
@@ -49,7 +49,6 @@ public class ActivitiCommand implements CommandLineRunner {
         securityUtil.logInAs("system");
         Page<ProcessDefinition> processDefinitionPage = processRuntime.processDefinitions(Pageable.of(0, 10));
         log.info("> Available Process definitions: {}", processDefinitionPage.getTotalItems());
-
         processDefinitionPage.getContent().forEach(processDefinition -> log.info("\t > Process definition: {}", processDefinition));
     }
 
