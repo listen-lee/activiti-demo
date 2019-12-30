@@ -43,7 +43,7 @@ public class ActivitiDemoApplicationTests {
 
     @Test
     public void contextLoads() {
-        securityUtil.logInAs("system");
+//        securityUtil.logInAs("system");
         Page<ProcessDefinition> processDefinitionPage = processRuntime.processDefinitions(Pageable.of(0, 10));
         for (ProcessDefinition processDefinition : processDefinitionPage.getContent()) {
             log.debug("\t > Process definition: {}", processDefinition);
@@ -52,7 +52,7 @@ public class ActivitiDemoApplicationTests {
 
     @Test
     public void deploy() {
-        securityUtil.logInAs("system");
+//        securityUtil.logInAs("system");
         ActivitiUtils.deployProcess(repositoryService, "processes/leaveDemo.bpmn");
         Page<ProcessDefinition> processDefinitionPage = processRuntime.processDefinitions(Pageable.of(0, 10));
         for (ProcessDefinition processDefinition : processDefinitionPage.getContent()) {

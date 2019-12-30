@@ -24,7 +24,6 @@ import java.util.Collection;
 @Slf4j
 @Component
 public class SecurityUtil {
-
     @Qualifier("myUserDetailsService")
     @Autowired
     private UserDetailsService userDetailsService;

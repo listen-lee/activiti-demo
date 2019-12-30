@@ -64,6 +64,6 @@ public class ActivitiUtils {
 
     public static void historyTask(HistoryService historyService, String processId) {
         List<HistoricTaskInstance> list = historyService.createHistoricTaskInstanceQuery().processInstanceId(processId).list();
-        log.info("HistoricTaskInstance:{}", list);
+        log.error("HistoricTaskInstance:{}", list);
     }
 }

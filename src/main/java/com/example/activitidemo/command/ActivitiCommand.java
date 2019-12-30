@@ -46,7 +46,7 @@ public class ActivitiCommand implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        securityUtil.logInAs("system");
+//        securityUtil.logInAs("system");
         Page<ProcessDefinition> processDefinitionPage = processRuntime.processDefinitions(Pageable.of(0, 10));
         log.info("> Available Process definitions: {}", processDefinitionPage.getTotalItems());
         processDefinitionPage.getContent().forEach(processDefinition -> log.info("\t > Process definition: {}", processDefinition));
@@ -54,7 +54,7 @@ public class ActivitiCommand implements CommandLineRunner {
 
     @Scheduled(initialDelay = 1000, fixedDelay = 1000)
     public void processText() {
-        securityUtil.logInAs("system");
+//        securityUtil.logInAs("system");
 
         String content = pickRandomString();
 
