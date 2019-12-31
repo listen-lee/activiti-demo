@@ -10,7 +10,6 @@ import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.junit.Test;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -30,7 +29,7 @@ public class ProcessEngineTest {
         RepositoryService repositoryService = processEngine.getRepositoryService();
         Deployment deployment = repositoryService
                 .createDeployment()
-                .addClasspathResource("holiday-request.bpmn20.xml")
+                .addClasspathResource("processes/holiday-request.bpmn20.xml")
                 .deploy();
         // 查询
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()

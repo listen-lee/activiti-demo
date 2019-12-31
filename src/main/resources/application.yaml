@@ -1,4 +1,8 @@
 spring:
-  activiti:
-    process-definition-location-prefix: classpath:/processes/
-    check-process-definitions: false
+  application:
+    name: @pom.artifactId@
+  datasource:
+    url: jdbc:mysql://localhost/flowable-spring-boot?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai&
+      nullCatalogMeansCurrent=true
+    username: root
+    password: root
